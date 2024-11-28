@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import youtube_dl
+import asyncio
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -74,7 +75,36 @@ async def stop(ctx):
     await voice_client.disconnect()
 
 
+# Yardım Komutu
+@bot.command(name='yardım', help='Bot komutları hakkında bilgi verir')
+async def help_command(ctx):
+    embed = discord.Embed(
+        title="Yardım Paneli", 
+        description="Aşağıdaki komutları kullanabilirsiniz:",
+        color=discord.Color.blue()
+    )
+
+    embed.add_field(name="!play <url>", value="Bir URL'den müzik çalar.", inline=False)
+    embed.add_field(name="!stop", value="Müziği durdurur ve ses kanalından ayrılır.", inline=False)
+    embed.add_field(name="!yardım", value="Komutlar hakkında yardım panelini gösterir.", inline=False)
+    embed.add_field(name="!bilgi", value="Bot hakkında genel bilgi verir.", inline=False)
+
+    await ctx.send(embed=embed)
+
+# Bot Hakkında Bilgi Komutu
+@bot.command(name='bilgi', help='Bot hakkında genel bilgi verir')
+async def bilgi(ctx):
+    embed = discord.Embed(
+        title="Bot Bilgisi",
+        description="Bu bot, Discord sunucularında müzik çalmanıza yardımcı olmak için tasarlanmıştır.",
+        color=discord.Color.green()
+    )
+    embed.add_field(name="Versiyon", value="1.0.0", inline=False)
+    embed.add_field(name="Geliştirici", value="Sizin Adınız", inline=False)
+    embed.add_field(name="GitHub", value="https://github.com/yourgithubrepo", inline=False)
+
+    await ctx.send(embed=embed)
+
 # Bot tokeninizi buraya ekleyin
 TOKEN = 'TOKEN BURAYA!'
 bot.run(TOKEN)
-
